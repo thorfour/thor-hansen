@@ -60,7 +60,7 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "remote-exec" {
         inline = [
-            "certbot --nginx -d thor-hansen.com",
+            "certbot --non-interactive --agree-tos -m certbot@thor-hansen.com --nginx -d thor-hansen.com",
             "systemctl restart nginx",
         ]
 
