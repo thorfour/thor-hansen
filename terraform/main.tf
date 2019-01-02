@@ -19,8 +19,13 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "remote-exec" {
         inline = [
+            "apt update",
+            "apt -y install software-properties-common",
+            "add-apt-repository universe",
+            "add-apt-repository ppa:certbot/certbot -y",
+            "apt update",
+            "apt -y install python-certbot-nginx",
             "apt -y install nginx",
-            "apt -y install python-certbox-nginx",
         ]
 
         connection {
