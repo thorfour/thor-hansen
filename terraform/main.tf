@@ -4,7 +4,7 @@ provider "digitalocean" {
 
 resource "digitalocean_ssh_key" "default" {
     name = "default"
-    public_key = "{$file("${var.ssh_key_path}.pub")}"
+    public_key = "${file("${var.ssh_key_path}.pub")}"
 }
 
 # Create the server droplet
