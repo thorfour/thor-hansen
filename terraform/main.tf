@@ -19,8 +19,43 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "remote-exec" {
         inline = [
-            "wget ${var.hugo_release}",
-            "apt install hugo*.deb",
+            "apt install nginx",
+            "apt install python-certbox-nginx",
+        ]
+
+        connection {
+            type = "ssh"
+            user = "root"
+            private_key = "${file("${var.ssh_key_path}")}"
+        }
+    }
+
+    provisioner "file" {
+        source = "../hugo/"
+        destination = "/var/www/thor-hansen/"
+    
+        connection {
+            type = "ssh"
+            user = "root"
+            private_key = "${file("${var.ssh_key_path}")}"
+        }
+    }
+
+    provisioner "file" {
+        source = "../config/default"
+        destination = "/etc/nginx/sites-available/default"
+
+        connection {
+            type = "ssh"
+            user = "root"
+            private_key = "${file("${var.ssh_key_path}")}"
+        }
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "certbox --nginx -d thor-hansen.com",
+            "systemctl nginx restart",
         ]
 
         connection {
