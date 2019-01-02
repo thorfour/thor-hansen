@@ -58,10 +58,11 @@ resource "digitalocean_droplet" "hugo_server" {
         }
     }
 
+    # Dump a script to execute later once dns is updated
     provisioner "remote-exec" {
         inline = [
-            "certbot --non-interactive --agree-tos -m certbot@thor-hansen.com --nginx -d thor-hansen.com",
-            "systemctl restart nginx",
+            "echo $'certbot --non-interactive --agree-tos -m certbot@thor-hansen.com --nginx -d thor-hansen.com' > certbot.sh",
+            "chmod +x certbot.sh",
         ]
 
         connection {
