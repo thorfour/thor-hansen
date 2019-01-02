@@ -13,4 +13,4 @@ deploy:
 	   	-v ~/.ssh:/root/.ssh \
 		-v ${PWD}:${PWD} \
 		-w ${PWD}/terraform \
-	   	hashicorp/terraform:light plan
+	   	hashicorp/terraform:light apply
