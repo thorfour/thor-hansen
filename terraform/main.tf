@@ -26,6 +26,7 @@ resource "digitalocean_droplet" "hugo_server" {
             "apt update",
             "apt -y install python-certbot-nginx",
             "apt -y install nginx",
+            "mkdir -p /var/www/thor-hansen",
         ]
 
         connection {
@@ -37,7 +38,7 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "file" {
         source = "../hugo/"
-        destination = "/var/www/thor-hansen/"
+        destination = "/var/www/thor-hansen"
     
         connection {
             type = "ssh"
@@ -59,8 +60,8 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "remote-exec" {
         inline = [
-            "certbox --nginx -d thor-hansen.com",
-            "systemctl nginx restart",
+            "certbot --nginx -d thor-hansen.com",
+            "systemctl restart nginx",
         ]
 
         connection {
