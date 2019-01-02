@@ -19,8 +19,8 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "remote-exec" {
         inline = [
-            "apt install nginx",
-            "apt install python-certbox-nginx",
+            "apt -y install nginx",
+            "apt -y install python-certbox-nginx",
         ]
 
         connection {
