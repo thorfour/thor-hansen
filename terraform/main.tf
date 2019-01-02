@@ -38,7 +38,7 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "file" {
         source = "../hugo/"
-        destination = "/var/www/thor-hansen"
+        destination = "/var"
     
         connection {
             type = "ssh"
@@ -48,8 +48,8 @@ resource "digitalocean_droplet" "hugo_server" {
     }
 
     provisioner "file" {
-        source = "../config/default"
-        destination = "/etc/nginx/sites-available/default"
+        source = "../config/nginx.conf"
+        destination = "/etc/nginx/nginx.conf"
 
         connection {
             type = "ssh"
@@ -63,6 +63,7 @@ resource "digitalocean_droplet" "hugo_server" {
         inline = [
             "echo $'certbot --non-interactive --agree-tos -m certbot@thor-hansen.com --nginx -d thor-hansen.com' > certbot.sh",
             "chmod +x certbot.sh",
+            "systemctl restart nginx",
         ]
 
         connection {

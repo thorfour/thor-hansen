@@ -14,3 +14,11 @@ deploy:
 		-v ${PWD}:${PWD} \
 		-w ${PWD}/terraform \
 	   	hashicorp/terraform:light apply
+
+teardown:
+	docker run -i \
+	   	-t \
+	   	-v ~/.ssh:/root/.ssh \
+		-v ${PWD}:${PWD} \
+		-w ${PWD}/terraform \
+	   	hashicorp/terraform:light destroy
