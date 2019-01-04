@@ -7,6 +7,20 @@ resource "digitalocean_ssh_key" "default" {
     public_key = "${file("${var.ssh_key_path}.pub")}"
 }
 
+data "template_file" "hugo_config" {
+    template = "${file("../config/config.toml")}"
+
+    vars {
+        url = "${var.url}"
+        name = "${var.name}"
+        description = "${var.description}"
+        github = "${var.github}"
+        linkedin = "${var.linkedin}"
+        twitter = "${var.twitter}"
+        email = "${var.email}"
+    }
+}
+
 # Create the server droplet
 resource "digitalocean_droplet" "hugo_server" {
     image = "${var.os_image}"
@@ -40,6 +54,17 @@ resource "digitalocean_droplet" "hugo_server" {
         source = "../hugo/"
         destination = "/var"
     
+        connection {
+            type = "ssh"
+            user = "root"
+            private_key = "${file("${var.ssh_key_path}")}"
+        }
+    }
+
+    provisioner "file" {
+        content = "${data.template_file.hugo_config.rendered}"
+        destination "/var/hugo/config.toml"
+        
         connection {
             type = "ssh"
             user = "root"

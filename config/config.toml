@@ -1,6 +1,6 @@
 ## Basic Configuration
 
-baseurl = "https://thor-hansen.com" 
+baseurl = "https://${url}" 
 builddrafts = false
 canonifyurls = false
 languageCode = "en-US"
@@ -9,20 +9,19 @@ contentdir = "content"
 layoutdir = "layouts"
 publishdir = "public"
 
-author = "Thor Hansen"
-title = "Thor Hansen"
+author = "${name}"
+title = "${name}"
 
 theme = "hugo-goa"
 
 ## Hugo Built-in Features
-# disqusShortname = "https-shenoybr-github-io-hugo-goa-demo" # Comment out to disable Disqus.
 googleAnalytics = "XYZ"
 enableRobotsTXT = true
 
 ## Site Settings
 [params]
-author = "Thor Hansen"
-description = "distributed systems engineer at [DigitalOcean](https://www.digitalocean.com/)"
+author = "${name}"
+description = "${description}"
 authorimage = "profile.png"
 dateformat = "Jan 2, 2006"
 
@@ -33,14 +32,14 @@ keywords = "minimalist,blog,goa,hugo,developer"
 
 ## Social Accounts
 [params.social]
-github = "thorfour"
-linkedin = "thor-hansen"
-twitter = "thor4hansen"
-email = "me@thor-hansen.com"
+github = "${github}"
+linkedin = "${linkedin}"
+twitter = "${twitter}"
+email = "${email}"
 
 ## Extras
 [params.extra]
-copyright = "© 2018. Thor Hansen. [Some Rights Reserved](http://creativecommons.org/licenses/by/3.0/)." 
+copyright = "© 2018. ${name}. [Some Rights Reserved](http://creativecommons.org/licenses/by/3.0/)." 
 poweredby = true
 highlightjs = true
 
