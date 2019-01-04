@@ -8,4 +8,4 @@ ADD https://github.com/gohugoio/hugo/releases/download/v${VERSION}/hugo_${VERSIO
 RUN tar xzf /usr/local/hugo/hugo_${VERSION}_Linux-64bit.tar.gz -C /usr/local/hugo
 RUN rm /usr/local/hugo/hugo_${VERSION}_Linux-64bit.tar.gz
 
-CMD /usr/local/hugo/hugo
+ENTRYPOINT ["/usr/local/hugo/hugo"]
