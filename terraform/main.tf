@@ -50,16 +50,10 @@ resource "digitalocean_droplet" "hugo_server" {
         }
     }
 
-    provisioner "file" {
-        source = "../hugo/"
-        destination = "/var"
-    
-        connection {
-            type = "ssh"
-            user = "root"
-            private_key = "${file("${var.ssh_key_path}")}"
-        }
-    }
+    # TODO THOR wget the latest hugo release
+    # TODO THOR generate a hugo server here
+    # TODO THOR checkout theme
+    # TODO THOR copy profile.png
 
     provisioner "file" {
         content = "${data.template_file.hugo_config.rendered}"
@@ -71,6 +65,8 @@ resource "digitalocean_droplet" "hugo_server" {
             private_key = "${file("${var.ssh_key_path}")}"
         }
     }
+
+    # TODO THOR regenerate site with new config
 
     provisioner "file" {
         source = "../config/nginx.conf"
