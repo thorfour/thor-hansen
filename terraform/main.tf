@@ -125,3 +125,7 @@ resource "digitalocean_droplet" "hugo_server" {
         }
     }
 }
+
+output "ip" {
+    value = "${digitalocean_droplet.hugo_server.ipv4_address}"
+}
