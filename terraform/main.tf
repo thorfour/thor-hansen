@@ -49,8 +49,8 @@ resource "digitalocean_droplet" "hugo_server" {
             "apt -y install python-certbot-nginx",
             "apt -y install nginx",
             "wget https://github.com/gohugoio/hugo/releases/download/v${var.hugo_release}/hugo_${var.hugo_release}_Linux-64bit.tar.gz",
-            "tar xzf hugo_${var.hugo_release}_Linux-64bit.tar.gz -C /usr/local/hugo",
-            "cd /var"
+            "tar xzf hugo_${var.hugo_release}_Linux-64bit.tar.gz -C /usr/local",
+            "cd /var",
             "/usr/local/hugo new site hugo",
             "cd /var/hugo/themes",
             "git clone https://github.com/shenoybr/hugo-goa",
@@ -65,7 +65,7 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "file" {
         content = "${data.template_file.hugo_config.rendered}"
-        destination "/var/hugo/config.toml"
+        destination = "/var/hugo/config.toml"
         
         connection {
             type = "ssh"
@@ -88,8 +88,8 @@ resource "digitalocean_droplet" "hugo_server" {
     }
 
     provisioner "file" {
-        path = "../config/profile.png"
-        destination "/var/hugo/${var.url}/www/img/profile.png"
+        source = "../config/profile.png"
+        destination = "/var/hugo/${var.url}/www/img/profile.png"
         
         connection {
             type = "ssh"
