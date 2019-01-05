@@ -21,6 +21,14 @@ data "template_file" "hugo_config" {
     }
 }
 
+data "template_file" "nginx_config" {
+    template = "${file("../config/nginx.conf")}"
+
+    vars {
+        url = "${var.url}"
+    }
+}
+
 # Create the server droplet
 resource "digitalocean_droplet" "hugo_server" {
     image = "${var.os_image}"
@@ -40,7 +48,12 @@ resource "digitalocean_droplet" "hugo_server" {
             "apt update",
             "apt -y install python-certbot-nginx",
             "apt -y install nginx",
-            "mkdir -p /var/www/thor-hansen",
+            "wget https://github.com/gohugoio/hugo/releases/download/v${var.hugo_release}/hugo_${var.hugo_release}_Linux-64bit.tar.gz",
+            "tar xzf hugo_${var.hugo_release}_Linux-64bit.tar.gz -C /usr/local",
+            "cd /var",
+            "/usr/local/hugo new site hugo",
+            "cd /var/hugo/themes",
+            "git clone https://github.com/shenoybr/hugo-goa",
         ]
 
         connection {
@@ -51,19 +64,8 @@ resource "digitalocean_droplet" "hugo_server" {
     }
 
     provisioner "file" {
-        source = "../hugo/"
-        destination = "/var"
-    
-        connection {
-            type = "ssh"
-            user = "root"
-            private_key = "${file("${var.ssh_key_path}")}"
-        }
-    }
-
-    provisioner "file" {
         content = "${data.template_file.hugo_config.rendered}"
-        destination "/var/hugo/config.toml"
+        destination = "/var/hugo/config.toml"
         
         connection {
             type = "ssh"
@@ -72,8 +74,33 @@ resource "digitalocean_droplet" "hugo_server" {
         }
     }
 
+    provisioner "remote-exec" {
+        inline = [
+            "cd /var/hugo",
+            "/usr/local/hugo -b https://${var.url}",
+        ]
+
+        connection {
+            type = "ssh"
+            user = "root"
+            private_key = "${file("${var.ssh_key_path}")}"
+        }
+    }
+
     provisioner "file" {
-        source = "../config/nginx.conf"
+        source = "../config/profile.png"
+        destination = "/var/hugo/public/img/profile.png"
+        
+        connection {
+            type = "ssh"
+            user = "root"
+            private_key = "${file("${var.ssh_key_path}")}"
+        }
+    }
+
+
+    provisioner "file" {
+        content = "${data.template_file.nginx_config.rendered}"
         destination = "/etc/nginx/nginx.conf"
 
         connection {
@@ -86,7 +113,7 @@ resource "digitalocean_droplet" "hugo_server" {
     # Dump a script to execute later once dns is updated
     provisioner "remote-exec" {
         inline = [
-            "echo $'certbot --non-interactive --agree-tos -m certbot@thor-hansen.com --nginx -d thor-hansen.com' > certbot.sh",
+            "echo $'certbot --non-interactive --agree-tos -m certbot@${var.url} --nginx -d ${var.url}' > certbot.sh",
             "chmod +x certbot.sh",
             "systemctl restart nginx",
         ]
