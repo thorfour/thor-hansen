@@ -5,7 +5,7 @@ variable "ssh_key_path" {
 }
 
 variable "hugo_release" {
-    default = "https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb"
+    default = "0.53"
 }
 
 variable "os_image" {
