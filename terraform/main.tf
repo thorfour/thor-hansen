@@ -89,7 +89,7 @@ resource "digitalocean_droplet" "hugo_server" {
 
     provisioner "file" {
         source = "../config/profile.png"
-        destination = "/var/hugo/${var.url}/www/img/profile.png"
+        destination = "/var/hugo/public/img/profile.png"
         
         connection {
             type = "ssh"
