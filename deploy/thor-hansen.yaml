@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: thor-hansen
+  labels:
+    app.kubernetes.io/name: thor-hansen
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: thor-hansen-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+    paths:
+    - path: /
+      backend:
+        serviceName: thor-hansen
+        servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thor-hansen
+  namespace: thor-hansen
+spec:
+  selector:
+    app: thor-hansen
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: thor-hansen
+  name: thor-hansen
+  labels:
+    app: thor-hansen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thor-hansen
+  template:
+    spec:
+      containers:
+      - name: thor-hansen
+        image: quay.io/thorfour/thor-hansen:v1.0.0
+        ports: 
+        - containerPort: 80
