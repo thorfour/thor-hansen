@@ -12,9 +12,15 @@ metadata:
   name: thor-hansen-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
 spec:
+  tls:
+  - hosts:
+    - thor-hansen.com
+    secretName: thor-hansen-crt
   rules:
-  - http:
+  - host: thor-hansen.com
+    http:
       paths:
       - path: /
         backend:

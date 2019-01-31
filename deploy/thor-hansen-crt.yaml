@@ -1,0 +1,17 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: thor-hansen-crt
+spec:
+  secretName: thor-hansen-crt
+  dnsNames:
+  - thor-hansen.com
+  acme:
+    config:
+    - http01:
+        ingressClass: nginx
+      domains:
+      - thor-hansen.com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
