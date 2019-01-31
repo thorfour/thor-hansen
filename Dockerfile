@@ -14,3 +14,4 @@ FROM nginx
 COPY --from=0 /var/hugo/ /var/hugo/
 COPY ./template/nginx.conf /etc/nginx/nginx.conf
 COPY ./config/profile.png /var/hugo/public/img/profile.png
+EXPOSE 80
