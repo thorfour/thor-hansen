@@ -4,7 +4,6 @@ RUN tar xzf hugo_0.53_Linux-64bit.tar.gz -C /usr/local
 WORKDIR /var
 RUN /usr/local/hugo new site hugo
 WORKDIR /var/hugo/themes/
-RUN mkdir content
 RUN apk add --no-cache git
 RUN git clone https://github.com/shenoybr/hugo-goa
 COPY ./template/config.toml /var/hugo/config.toml
