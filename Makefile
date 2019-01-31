@@ -16,3 +16,15 @@ teardown:
 		-v ${PWD}:${PWD} \
 		-w ${PWD}/terraform \
 	   	hashicorp/terraform:light destroy
+
+docker:
+	docker run -i -t -v ${PWD}:${PWD} -w ${PWD}/template hashicorp/terraform:light init
+	docker run -i \
+	   	-t \
+		-v ${PWD}:${PWD} \
+		-w ${PWD}/template \
+	   	hashicorp/terraform:light apply
+	docker build .
+
+clean:
+	docker run -i -t -v ${PWD}:${PWD} -w ${PWD}/template hashicorp/terraform:light destroy

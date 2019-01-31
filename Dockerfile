@@ -7,10 +7,10 @@ WORKDIR /var/hugo/themes/
 RUN mkdir content
 RUN apk add --no-cache git
 RUN git clone https://github.com/shenoybr/hugo-goa
-COPY ./config/config.toml /var/hugo/config.toml
+COPY ./template/config.toml /var/hugo/config.toml
 RUN /usr/local/hugo -b https://thor-hansen.com
 
 FROM nginx
 COPY --from=0 /var/hugo/ /var/hugo/
-COPY ./config/nginx.conf /etc/nginx/nginx.conf
+COPY ./template/nginx.conf /etc/nginx/nginx.conf
 COPY ./config/profile.png /var/hugo/public/img/profile.png
