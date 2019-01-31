@@ -5,7 +5,7 @@ metadata:
 spec:
   acme:
     email: me@thor-hansen.com
-    server: https://acme-prod-v02.api.letsencrypt.org/directory
+    server: https://acme-v01.api.letsencrypt.org/directory
     privateKeySecretRef:
       # Secret resource used to store the account's private key.
       name: letsencrypt-prod
