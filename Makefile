@@ -24,7 +24,7 @@ docker:
 		-v ${PWD}:${PWD} \
 		-w ${PWD}/template \
 	   	hashicorp/terraform:light apply
-	docker build .
+	docker build -t quay.io/thorfour/thor-hansen .
 
 clean:
 	docker run -i -t -v ${PWD}:${PWD} -w ${PWD}/template hashicorp/terraform:light destroy

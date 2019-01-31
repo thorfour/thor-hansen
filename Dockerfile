@@ -8,6 +8,7 @@ RUN mkdir content
 RUN apk add --no-cache git
 RUN git clone https://github.com/shenoybr/hugo-goa
 COPY ./template/config.toml /var/hugo/config.toml
+WORKDIR /var/hugo/
 RUN /usr/local/hugo -b https://thor-hansen.com
 
 FROM nginx
