@@ -8,17 +8,18 @@ metadata:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  namespace: thor-hansen
   name: thor-hansen-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - http:
-    paths:
-    - path: /
-      backend:
-        serviceName: thor-hansen
-        servicePort: 80
+      paths:
+      - path: /
+        backend:
+          serviceName: thor-hansen
+          servicePort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -46,6 +47,9 @@ spec:
     matchLabels:
       app: thor-hansen
   template:
+    metadata:
+      labels:
+        app: thor-hansen
     spec:
       containers:
       - name: thor-hansen
