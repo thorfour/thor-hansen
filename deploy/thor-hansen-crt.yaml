@@ -2,6 +2,7 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: thor-hansen-crt
+  namespace: thor-hansen
 spec:
   secretName: thor-hansen-crt
   dnsNames:
