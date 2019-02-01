@@ -1,6 +1,7 @@
 version: 2
 jobs: 
   build:
+    working_directory: /go/src/github.com/thorfour/thor-hansen
     docker: 
     - image: circleci/golang:1.11
     steps:
