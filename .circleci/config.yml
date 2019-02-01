@@ -1,17 +1,17 @@
 version: 2
 jobs: 
   build:
-  docker: 
-  - image: circleci/golang:1.11
-  steps:
-    - setup_remote_docker
-    - checkout
-    - run:
-        name: build
-        command: |
-          make docker
-          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin quay.io
-          docker push quay.io/thorfour/thor-hansen
+    docker: 
+    - image: circleci/golang:1.11
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run:
+          name: build
+          command: |
+            make docker
+            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin quay.io
+            docker push quay.io/thorfour/thor-hansen
 
 workflows:
   version: 2
