@@ -59,6 +59,6 @@ spec:
     spec:
       containers:
       - name: thor-hansen
-        image: quay.io/thorfour/thor-hansen:v1.0.0
+        image: quay.io/thorfour/thor-hansen:v1.0.1
         ports: 
         - containerPort: 80
