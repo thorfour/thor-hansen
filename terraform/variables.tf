@@ -25,7 +25,7 @@ variable "name" {
 }
 
 variable "description" {
-    default = "cloud scale distributed systems engineer at [DigitalOcean](http://www.digitalocean.com/)"
+    default = "cloud software engineer at [Hashicorp](https://www.hashicorp.com/)"
 }
 
 variable "github" {
