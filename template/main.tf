@@ -1,7 +1,7 @@
 data "template_file" "hugo_config" {
     template = "${file("../config/config.toml")}"
 
-    vars {
+    vars = {
         url = "${var.url}"
         name = "${var.name}"
         description = "${var.description}"
@@ -15,15 +15,15 @@ data "template_file" "hugo_config" {
 data "template_file" "nginx_config" {
     template = "${file("../config/nginx.conf")}"
 
-    vars {
+    vars = {
         url = "${var.url}"
     }
 }
 
 # output generated files
 resource "null_resource" "local_nginx" {
-    triggers {
-        template = "${data.template_file.nginx_config.rendered}"
+    triggers = {
+        template = "data.template_file.nginx_config.rendered"
     }
     
     provisioner "local-exec" {
@@ -32,7 +32,7 @@ resource "null_resource" "local_nginx" {
 }
 
 resource "null_resource" "local_hugo" {
-    triggers {
+    triggers = {
         template = "${data.template_file.hugo_config.rendered}"
     }
     
