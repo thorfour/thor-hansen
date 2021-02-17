@@ -1,6 +1,6 @@
 FROM alpine
-RUN wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.tar.gz
-RUN tar xzf hugo_0.53_Linux-64bit.tar.gz -C /usr/local
+RUN wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_Linux-64bit.tar.gz
+RUN tar xzf hugo_0.80.0_Linux-64bit.tar.gz -C /usr/local
 WORKDIR /var
 RUN /usr/local/hugo new site hugo
 WORKDIR /var/hugo/themes/
