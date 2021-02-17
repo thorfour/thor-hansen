@@ -7,7 +7,7 @@ variable "name" {
 }
 
 variable "description" {
-    default = "cloud software engineer at [Hashicorp](https://www.hashicorp.com/)"
+    default = "building Vault Cloud at [Hashicorp](https://www.hashicorp.com/) and continous profiling at [Polar Signals](https://www.polarsignals.com)"
 }
 
 variable "github" {
